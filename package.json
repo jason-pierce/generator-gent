@@ -1,0 +1,36 @@
+{
+  "name": "ngGenerator",
+  "version": "0.0.1",
+  "description": "Yeoman Angular Generator",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "stephenst/generator-ngGenerate",
+  "author": {
+    "name": "Tony",
+    "email": "",
+    "url": "https://github.com/stephenst"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "~0.16.0",
+    "chalk": "~0.4.0",
+    "yosay": "^0.1.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
