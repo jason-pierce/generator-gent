@@ -9,7 +9,7 @@ var yeoman = require('yeoman-generator');
 var yosay  = require('yosay');
 var chalk  = require('chalk');
 
-var ngGenerator = yeoman.generators.Base.extend({
+var gent = yeoman.generators.Base.extend({
     init: function () {
         this.pkg = require('../package.json');
 
@@ -113,4 +113,4 @@ var ngGenerator = yeoman.generators.Base.extend({
     }
 });
 
-module.exports = ngGenerator;
+module.exports = gent;
