@@ -47,9 +47,15 @@ var gent = yeoman.generators.Base.extend({
     },
 
     scaffoldFolders: function () {
-        this.mkdir("app");
-        this.mkdir("app/css");
-        this.mkdir("app/sections");
+        this.mkdir("src");
+        this.mkdir("src/app");
+        this.mkdir("src/_assets");
+        this.mkdir("src/_assets/sass");
+        this.mkdir("src/_assets/data");
+        this.mkdir("src/_assets/font");
+        this.mkdir("src/_assets/img");
+        this.mkdir("src/app/_globals");
+        this.mkdir("src/app/sections");
         this.mkdir("build");
     },
 
@@ -58,10 +64,11 @@ var gent = yeoman.generators.Base.extend({
         this.copy('editorconfig', '.editorconfig');
         this.copy('jshintrc', '.jshintrc');
 
+        this.copy("_index.jade", "src/index.jade");
         this.copy("_footer.html", "app/footer.html");
         this.copy("_gruntfile.js", "Gruntfile.js");
         this.copy("_package.json", "package.json");
-        this.copy("_main.css", "app/css/main.css");
+        this.copy("_main.css", "src/_assets/sass/main.css");
 
         var context = {
             site_name: this.appName

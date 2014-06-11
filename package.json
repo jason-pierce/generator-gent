@@ -4,10 +4,10 @@
   "description": "Yeoman Angular Generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "stephenst/ngGenerator",
+  "repository": "generator-gent",
   "author": {
     "name": "Tony",
-    "email": "",
+    "email": "tony.stephens@agilex.com",
     "url": "https://github.com/stephenst"
   },
   "engines": {
