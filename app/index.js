@@ -1,4 +1,4 @@
-/*jslint node: true */
+/*jslint node: true, nomen: true, plusplus: true, es5: true */
 /*global angular, jquery, $, $http */
 
 'use strict';
@@ -70,43 +70,55 @@ var gent = yeoman.generators.Base.extend({
         this.template("_header.html", "app/header.html", context);
     },
     generateDemoSection: function () {
+        // Another function that you may not be familiar with is the classify function, which is provided to you by Underscore Strings. What it does is it takes a string and it creates a "class" version of it, it will remove things like spaces and create a camel-cased version, suitable for things like HTML classes and IDs; underscored does the same thing except instead of camel-casing it snake-cases them. Besides that, it's all stuff we have done in the previous function, the only other thing worth mentioning is that we are pre-pending a time-stamp, both to keep the files unique but also for ordering. When we load the files in, they are alphabetized so having the time as the prefix will keep them in order.
         if (this.addDemoSection) {
-            var context = {
+            var context,
+                fileBase,
+                htmlFile,
+                cssFile;
+            context = {
                 content: "Demo Section",
                 id: this._.classify("Demo Section")
             };
 
-            var fileBase = Date.now() + "_" + this._.underscored("Demo Section");
-            var htmlFile = "app/sections/" + fileBase + ".html";
-            var cssFile  = "app/css/" + fileBase + ".css"; 
+            fileBase = Date.now() + "_" + this._.underscored("Demo Section");
+            htmlFile = "app/sections/" + fileBase + ".html";
+            cssFile  = "app/css/" + fileBase + ".css";
 
             this.template("_section.html", htmlFile, context);
             this.template("_section.css", cssFile, context);
         }
     },
     generateMenu: function () {
-        var menu = this.read("_menu.html");
+        var menu,
+            t,
+            files,
+            i,
+            name,
+            context,
+            link;
+        menu = this.read("_menu.html");
 
-        var t = '<a><%= name %></a>';
-        var files = this.expand("app/sections/*.html");
+        t = '<a><%= name %></a>';
+        files = this.expand("app/sections/*.html");
 
-        for (var i = 0; i < files.length; i++) {
-            var name = this._.chain(files[i]).strRight("_").strLeftBack(".html").humanize().value();
-       
-            var context = {
+        for (i = 0; i < files.length; i++) {
+            name = this._.chain(files[i]).strRight("_").strLeftBack(".html").humanize().value();
+
+            context = {
                 name: name,
                 id: this._.classify(name)
             };
-       
-            var link = this.engine(t, context);
+
+            link = this.engine(t, context);
             menu = this.append(menu, "div.menu", link);
         }
-     
+
         this.write("app/menu.html", menu);
     },
-    runNpm: function(){
+    runNpm: function () {
         var done = this.async();
-        this.npmInstall("", function(){
+        this.npmInstall("", function () {
             console.log("\nEverything Setup !!!\n");
             done();
         });
