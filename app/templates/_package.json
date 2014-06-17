@@ -1,6 +1,8 @@
 {
     "name": "appname",
-    "version": "0.0.0",
+    "version": "0.1.0",
+    "description": "Yeoman Generator on Jade, SASS, JSLint",
+    "license": "MIT",
     "devDependencies": {
         "grunt": "~0.4.2",
         "grunt-cli": "~0.1.9",
@@ -28,6 +30,7 @@
         "grunt-contrib-uglify": "*",
         "grunt-contrib-concat": "*",
         "grunt-ngmin": "*",
+        "grunt-usemin": "^2.2.0",
 
         "grunt-jslint": "~1.0.0"
     }

@@ -168,6 +168,20 @@ module.exports = function (grunt) {
             }
         },
 
+        useminPrepare: {
+            options: {
+                dest: 'build'
+            },
+            html: 'app/index.html'
+        },
+        usemin: {
+            options: {
+                dirs: ['build']
+            },
+            html: ['build/{,*/}*.html'],
+            css: ['build/_assets/css/{,*/}*.css']
+        },
+
         uglify: {
             options: {
                 mangle: false
@@ -267,6 +281,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-usemin');
 
     grunt.registerTask('serve', ['connect']);
     grunt.registerTask('build', ['concat', 'cssmin']);
@@ -286,7 +301,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', [ 'jslint', 'jasmine' ]);
     grunt.registerTask('uglimin', [ 'ngmin', 'uglify' ]);
-    grunt.registerTask('build', [ 'jade', 'compass', 'jslint', 'karma', 'copy:assets', 'uglimin' ]);
+    grunt.registerTask('build', [ 'jade', 'compass', 'jslint', 'karma', 'copy:assets', 'useminPrepare', 'usemin', 'uglimin' ]);
     grunt.registerTask('build-without-test', [ 'jade', 'compass', 'jslint', 'copy:assets', 'uglimin' ]);
     grunt.registerTask('ci-build', [ 'jade', 'compass', 'jslint', 'copy' ]);
     grunt.registerTask('deploy', [ 'build' ]);

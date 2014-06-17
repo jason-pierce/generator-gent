@@ -1,6 +1,24 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+  "name": "gent",
+  "version": "0.0.1",
+  "authors": [
+    "Tony <tonystephens@gmail.com>"
+  ],
+  "description": "description",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/_assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.18",
+    "angular-route": "~1.2.18",
+    "angular-resource": "~1.2.18",
+    "angular-cookies": "~1.2.18",
+    "bootstrap": "~3.1.1"
+  }
 }
-

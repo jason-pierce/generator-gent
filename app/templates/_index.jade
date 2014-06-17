@@ -13,7 +13,7 @@ head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='Agilex')
-    title PC3
+    title <%= site_name %>
     
     link(href='_assets/css/pc3.css', rel='stylesheet', media='screen')
     
@@ -64,6 +64,7 @@ body
     div#push
     include app/_globals/footer.jade
 
+<!-- build:js build/app/libs.js -->
     script(src='lib/jquery/jquery.js')
     script(src='lib/jquery-ui-1.10/jquery-ui-1.10.0.custom.js')
     script.
@@ -106,6 +107,7 @@ body
     script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload-process.js')
     script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload-validate.js')
     script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload-angular.js')
+<!-- endbuild -->
 
     script(src='app/app.js')
     script(src='app/_globals/root.js')

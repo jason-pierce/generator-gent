@@ -51,6 +51,7 @@ var gent = yeoman.generators.Base.extend({
         this.mkdir("src/app");
         this.mkdir("src/_assets");
         this.mkdir("src/_assets/sass");
+        this.mkdir("src/_assets/bower_components");
         this.mkdir("src/_assets/data");
         this.mkdir("src/_assets/font");
         this.mkdir("src/_assets/img");
@@ -62,10 +63,10 @@ var gent = yeoman.generators.Base.extend({
     copyMainFiles: function () {
         // Here we use two new methods, copy and template, which are pretty similar in function. copy will take the file from the templates directory and move it to the output folder, using the provided paths. template does the same thing, except before writing to the output folder it will run it through Underscore's tempting function along with the context in order to fill in the placeholders.
         this.copy('editorconfig', '.editorconfig');
-        this.copy('jshintrc', '.jshintrc');
+        this.copy('bowerrc', '.bowerrc');
+        this.copy('_bower.json', 'bower.json');
 
-        this.copy("_index.jade", "src/index.jade");
-        this.copy("_footer.html", "app/footer.html");
+        // this.copy("_index.jade", "src/index.jade");
         this.copy("_gruntfile.js", "Gruntfile.js");
         this.copy("_package.json", "package.json");
         this.copy("_main.css", "src/_assets/sass/main.css");
@@ -74,7 +75,7 @@ var gent = yeoman.generators.Base.extend({
             site_name: this.appName
         };
 
-        this.template("_header.html", "app/header.html", context);
+        this.template("_index.jade", "src/index.jade", context);
     },
     generateDemoSection: function () {
         // Another function that you may not be familiar with is the classify function, which is provided to you by Underscore Strings. What it does is it takes a string and it creates a "class" version of it, it will remove things like spaces and create a camel-cased version, suitable for things like HTML classes and IDs; underscored does the same thing except instead of camel-casing it snake-cases them. Besides that, it's all stuff we have done in the previous function, the only other thing worth mentioning is that we are pre-pending a time-stamp, both to keep the files unique but also for ordering. When we load the files in, they are alphabetized so having the time as the prefix will keep them in order.
