@@ -5,7 +5,8 @@
 
 module.exports = function (grunt) {
     grunt.initConfig({
-        //task config
+        // grunt-contrib-jade
+        // Generate HTML from Jade Templates.
         jade: {
             compileModules: {
                 options: {
@@ -18,68 +19,36 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'src/app/',
+                        cwd: 'src/',
                         src: ['**/*.jade'],
-                        dest: 'build/app/',
+                        dest: 'build/',
                         ext: '.html'
                     }
                 ]
-            },
-            index: {
-                options: {
-                    data: {
-                        debug: true
-                    },
-                    pretty: true
-                },
-                files: {
-                    "build/index.html": "src/index.jade"
-                }
-            },
-            redirect: {
-                options: {
-                    data: {
-                        debug: true
-                    },
-                    pretty: true
-                },
-                files: {
-                    "build/redirect.html": "src/redirect.jade"
-                }
             }
         },
+        // grunt-contrib-compass
+        // Generate CSS from SASS
         compass: {
             dist: {
                 options: {
-                    config: 'config/config.rb',
-                    require: ['bourbon']
+                    config: 'config/compass.config.rb'
                 },
                 files: {
                     'build/_assets/css/pc3.css': 'src/_assets/sass/pc3.scss'
                 }
             }
         },
+        // grunt-jslint
+        // Validate the JS using the opinionated JSLint
         jslint: {
-            gruntfile: {
-                src: [
-                    'Gruntfile.js'
-                ],
-                directives: {
-                    node: true
-                },
-                options: {
-                    errorsOnly: true
-                }
-            },
             server: {
                 src: [
                     'src/**/*.js'
                 ],
                 exclude: [
-                    'src/lib/**/*.js',
-                    'src/**/*.min.js',
-                    'src/app/_globals/services-modal.js',
-                    'src/styleguide/**/*.js'
+                    'src/_assets/bower_components/**/*.js',
+                    'src/**/*.min.js'
                 ],
                 directives: {
                     browser: true,
@@ -99,7 +68,8 @@ module.exports = function (grunt) {
                 }
             }
         },
-
+        // grunt-karma
+        // Unit Testing for Angular.
         karma: {
             unit: {
                 configFile: 'config/karma.conf.js',
@@ -109,10 +79,32 @@ module.exports = function (grunt) {
             }
         },
 
+        // grunt-wiredep
+        // grunt-wiredep is a Grunt plug-in, which finds your components and injects them directly into the HTML file you specify.
+        wiredep: {
+            target: {
+                src: [
+                    'src/*.jade',                   // .jade support...
+                    'src/_assets/sass/pc3.scss'     // .scss & .sass support...
+                ],
+                // Optional:
+                // ---------
+                cwd: '',
+                dependencies: true,
+                devDependencies: true,
+                exclude: [],
+                fileTypes: {},
+                ignorePath: '',
+                overrides: {}
+            }
+        },
+
+        // grunt-styleguide
+        // Universal CSS styleguide generator for grunt. Easily integrate Styledocco or KSS styleguide generation into your development workflow.
         styleguide: {
             options: {
                 template: {
-                    src: 'src/lib/grunt-styleguide-0.2.15'
+                    src: 'node_modules/grunt-styleguide/templates/kss/index.html'
                 },
                 framework: {
                     name: 'kss'
@@ -125,11 +117,50 @@ module.exports = function (grunt) {
             }
         },
 
+        // grunt-contrib-clean
+        // Clean files and folders.
+        clean: [
+            'build', 
+            '.tmp'
+        ],
+
+        // grunt-contrib-copy
+        // Copy files and folders.
+        copy: {
+            main: {
+                expand: true,
+                cwd: 'src/',
+                src: [
+                    '**', 
+                    '!**/*.jade',
+                    '!_assets/sass'
+                ],
+                dest: 'build/'
+            }
+        },
+ 
+        // grunt-usemin
+        // Replaces references from non-optimized scripts, stylesheets and other assets to their optimized version within a set of HTML files (or any templates/views).
+        useminPrepare: {
+            html: 'src/index.jade'
+        },
+        usemin: {
+            html: ['src/index.jade']
+        },
+        // grunt-contrib-uglify
+        // Minify files with UglifyJS.
+        uglify: {
+            options: {
+                sourceMap: true,
+                report: 'min',
+                mangle: false
+            }
+        },
+
+
+        // https://github.com/gruntjs/grunt-contrib-watch
+        // Run predefined tasks whenever watched file patterns are added, changed or deleted.
         watch: {
-            gruntfile: {
-                files: 'Gruntfile.js',
-                tasks: ['jslint:gruntfile']
-            },
             compass: {
                 files: ['src/_assets/sass/*.scss', 'src/_assets/**/*.scss'],
                 tasks: ['compass']
@@ -144,166 +175,44 @@ module.exports = function (grunt) {
                 options: {
                     spawn: false
                 }
-            },
-            livereload: {
-                options: {
-                    livereload: true
-                },
-                files: [
-                    'src/js/**/*.js', '!src/lib/**/*.js',
-                    'src/_assets/sass/*.css', '*'
-                ]
             }
         },
-
-        ngmin: {
-            all_js_files: {
-                expand: true,
-                cwd: 'src/',
-                src: [
-                    'app/**/*.js',
-                    'lib/**/*.js'
-                ],
-                dest: 'build/'
-            }
-        },
-
-        useminPrepare: {
-            options: {
-                dest: 'build'
-            },
-            html: 'app/index.html'
-        },
-        usemin: {
-            options: {
-                dirs: ['build']
-            },
-            html: ['build/{,*/}*.html'],
-            css: ['build/_assets/css/{,*/}*.css']
-        },
-
-        uglify: {
-            options: {
-                mangle: false
-            },
-            my_target: {
-                files: [{
-                    expand: true,
-                    cwd: 'build/',
-                    src: [
-                        '**/**/*.js'
-                    ],
-                    dest: 'build/'
-                }]
-            }
-        },
-
-        concat: {
-            options: {
-                separator: ';'
-            },
-            all_js_files: {
-                src: ['build/app/**/*.js'],
-                dest: 'build/main.js'
-            }
-        },
-
-        //  concat: {
-        //      dist: {
-        //          src: ["app/header.html", "app/menu.html", "app/sections/*.html", "app/footer.html"],
-        //          dest: "build/index.html"
-        //      }
-        //  },
-        //  cssmin: {
-        //      css: {
-        //          files: {
-        //              "build/css/main.css": ["app/css/*.css"]
-        //          }
-        //      }
-        //  },
-
-        connect: {
-            server: {
-                options: {
-                    keepalive: true,
-                    open: true,
-                    middleware: function () {
-                        // Two resources we need to handle, the root resource (our "index.html") in which case we need to combine all our HTML files and return them and then the "main.css" resource, in which case we would want to return all the CSS files combined together. As for anything else, we can just return a 404.
-                        var middleware = [];
-                        middleware.push(function (req, res, next) {
-                            var html,
-                                files,
-                                i;
-                            if (req.url !== "/") {
-                                return next();
-                            }
-                            res.setHeader("Content-type", "text/html");
-
-                            html = grunt.file.read("app/header.html");
-                            html += grunt.file.read("app/menu.html");
-
-                            files = grunt.file.expand("app/sections/*.html");
-                            for (i = 0; i < files.length; i++) {
-                                html += grunt.file.read(files[i]);
-                            }
-
-                            html += grunt.file.read("app/footer.html");
-                            res.end(html);
-                        });
-                        middleware.push(function (req, res, next) {
-                            var css,
-                                files,
-                                i;
-                            if (req.url !== "/css/main.css") {
-                                return next();
-                            }
-                            res.setHeader("Content-type", "text/css");
-                            css = "";
-
-                            files = grunt.file.expand("app/css/*.css");
-                            for (i = 0; i < files.length; i++) {
-                                css += grunt.file.read(files[i]);
-                            }
-
-                            res.end(css);
-                        });
-                        middleware.push(function (req, res) {
-                            res.statusCode = 404;
-                            res.end("Not Found");
-                        });
-                        return middleware;
-                    }
-                }
-            }
-        }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
+
+
+
+
+
+    grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-usemin');
 
-    grunt.registerTask('serve', ['connect']);
-    grunt.registerTask('build', ['concat', 'cssmin']);
-    grunt.registerTask('default', ['build']);
-
     grunt.loadNpmTasks('grunt-jslint');
-    grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-contrib-jade');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-styleguide');
-    grunt.loadNpmTasks('grunt-ngmin');
+    grunt.loadNpmTasks('grunt-ng-annotate');
 
-    grunt.registerTask('test', [ 'jslint', 'jasmine' ]);
-    grunt.registerTask('uglimin', [ 'ngmin', 'uglify' ]);
-    grunt.registerTask('build', [ 'jade', 'compass', 'jslint', 'karma', 'copy:assets', 'useminPrepare', 'usemin', 'uglimin' ]);
-    grunt.registerTask('build-without-test', [ 'jade', 'compass', 'jslint', 'copy:assets', 'uglimin' ]);
-    grunt.registerTask('ci-build', [ 'jade', 'compass', 'jslint', 'copy' ]);
+    grunt.loadNpmTasks('grunt-contrib-jade');
+    grunt.loadNpmTasks('grunt-contrib-compass');
+
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+
+    grunt.loadNpmTasks('grunt-styleguide');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
+
+    grunt.registerTask('build', [ 
+        'jade',
+        'compass',
+        'jslint',
+        'copy:main',
+        'useminPrepare',
+        'usemin',
+        'uglify'
+    ]);
     grunt.registerTask('deploy', [ 'build' ]);
     grunt.registerTask('default', [ 'build', 'watch' ]);
 };

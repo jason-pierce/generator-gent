@@ -6,10 +6,25 @@
     "devDependencies": {
         "grunt": "~0.4.2",
         "grunt-cli": "~0.1.9",
-        "grunt-contrib-copy": "~0.4.1",
-        "grunt-contrib-connect": "~0.6.0",
+
+        "grunt-contrib-jade": "~0.8.0",
+
+        "grunt-contrib-sass": "~0.5.0",
+        "grunt-contrib-compass": "~0.5.0",
+        "grunt-styleguide": "~0.2.15",
+
+        "grunt-bower-install": "~1.6.0",
+        "grunt-wiredep": "^1.8.0",
+
+        "grunt-jslint": "~1.0.0",
+
         "grunt-contrib-concat": "~0.3.0",
-        "grunt-contrib-cssmin": "~0.7.0",
+        "grunt-contrib-copy": "~0.4.1",
+        "grunt-contrib-uglify": "~0.5.1",
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-usemin": "^2.2.0",
+        "grunt-ng-annotate": "0.3.2",
+
         "grunt-contrib-watch": "~0.5.3",
 
         "karma": "~0.10.2",
@@ -22,16 +37,6 @@
         "karma-chrome-launcher": "~0.1.0",
         "karma-firefox-launcher": "~0.1.0",
         "karma-junit-reporter": "~0.1.0",
-        "karma-spec-reporter": "0.0.6",
-
-        "grunt-contrib-jade": "~0.8.0",
-        "grunt-contrib-sass": "~0.5.0",
-        "grunt-contrib-compass": "~0.5.0",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-concat": "*",
-        "grunt-ngmin": "*",
-        "grunt-usemin": "^2.2.0",
-
-        "grunt-jslint": "~1.0.0"
+        "karma-spec-reporter": "0.0.6"
     }
 }

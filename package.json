@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "karma"
   },
   "files": [
     "app"
@@ -28,7 +28,7 @@
     "yosay": "^0.1.0"
   },
   "devDependencies": {
-    "mocha": "*"
+    "karma": "*"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"

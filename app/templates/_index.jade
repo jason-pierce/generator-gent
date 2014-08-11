@@ -62,130 +62,15 @@ body
             div#content
                 div(ng-view='ng-view', autoscroll)
     div#push
-    include app/_globals/footer.jade
+    include components/_globals/_footer.jade
 
-<!-- build:js build/app/libs.js -->
-    script(src='lib/jquery/jquery.js')
-    script(src='lib/jquery-ui-1.10/jquery-ui-1.10.0.custom.js')
-    script.
-      var $ = jQuery.noConflict();
-    script(type='text/javascript', src='lib/bootstrap-2.2.2/bootstrap.js')
+    // bower:js
+    // endbower
 
-    script(type='text/javascript', src="lib/angular-1.2.13/angular.js")
-    script(type='text/javascript', src="lib/angular-1.2.13/angular-route.js")
-    script(type='text/javascript', src="lib/angular-1.2.13/angular-sanitize.min.js")
+    script(src='components/app.js')
+    script(src='components/_globals/root.js')
+    script(src='components/_globals/directives.js')
+    script(src='components/_globals/filters.js')
 
-    script(type='text/javascript', src="lib/angular-1.2.13/angular-resource.js")
-    script(type='text/javascript', src="lib/angular-1.2.13/angular-cookies.js")
-    //- Angular UI team Grid library
-    script(type='text/javascript', src='lib/ng-grid/ng-grid-2.0.10.js')
-    script(type='text/javascript', src='lib/ng-grid/ng-grid-layout.js')
-    script(type='text/javascript', src='lib/ng-grid/ng-grid-flexible-height.js')
-    script(type='text/javascript', src='lib/ng-grid/ng-grid-csv-export.js')
-    //- Angular UI Tools
-    script(type='text/javascript', src='lib/angular-ui-0.3.2/angular-ui-ieshiv.js')
-    script(type='text/javascript', src='lib/angular-ui-0.3.2/angular-ui.js')
-    script(type='text/javascript', src='lib/angular-ui-0.3.2/date.js')
-    script(type='text/javascript', src='lib/angular-ui-0.3.2/mask.js')
-    script(type='text/javascript', src='lib/masked-input-1.3/jquery.maskedinput-1.3.js')
-    script(type='text/javascript', src='lib/angular-ui-0.3.2/validate.js')
-    script(type='text/javascript', src='lib/angular-ui-bootstrap-0.6.0/ui-bootstrap-tpls-0.8.0.js')
-    //- NG Upload??
-    script(type='text/javascript', src='lib/ngUpload-0.5.5/ng-upload.js')
-    //- Spinner - Use Promise Tracker to time REST calls to show spinner.
-    script(type='text/javascript', src='lib/promise-tracker-1.3.3/promise-tracker.js')
-    //- Session Timeout Library - pops up modal after set time.
-    script(type='text/javascript', src='lib/angular-idle-0.2.3/angular-idle.js')
-    //- IE Spinner cause it can't do animated CSS - used for full page loading
-    script(type='text/javascript', src='lib/spin-2.0/spin.min.js')
-    //- IE Placeholder Support, pure Angular Directive.
-        script(type='text/javascript', src='lib/ng-shims-placeholder-0.1/ng-shims-placeholder.js')
-
-    script(type='text/javascript', src='lib/jquery-file-upload/jquery.ui.widget.js')
-    script(type='text/javascript', src='lib/jquery-file-upload/jquery.iframe-transport.js')
-    script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload.js')
-    script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload-process.js')
-    script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload-validate.js')
-    script(type='text/javascript', src='lib/jquery-file-upload/jquery.fileupload-angular.js')
-<!-- endbuild -->
-
-    script(src='app/app.js')
-    script(src='app/_globals/root.js')
-    script(src='app/_globals/directives.js')
-    script(src='app/_globals/directive-spinner.js')
-    script(src='app/_globals/directive-autocomplete.js')
-    script(src='app/_globals/directive-password-check.js')
-    script(src='app/_globals/directive-placeholder.js')
-    script(src='app/_globals/services.js')
-    script(src='app/_globals/services-password.js')
-    script(src='app/_globals/services-modal.js')
-    script(src='app/_globals/services-account.js')
-    script(src='app/_globals/filters.js')
-
-    script(src='app/admin/admin.js')
-    script(src='app/admin/user-management/user-management.js')
-    script(src='app/admin/user-management/user-management-grid.js')
-    script(src='app/admin/user-management/user-management-approve.js')
-    script(src='app/admin/user-management/user-management-decline.js')
-    script(src='app/admin/user-management/user-management-makeadmin.js')
-    script(src='app/admin/user-management/user-management-reset.js')
-    script(src='app/admin/user-management/user-management-unlock-account.js')
-
-    script(src='app/admin/search/user-admin-search.js')
-
-    script(src='app/home/home.js')
-    script(src='app/home/error.js')
-
-    script(src='app/provider/provider.js')
-    script(src='app/provider/home/provider-home.js')
-    script(src='app/provider/auths/provider-auths.js')
-    script(src='app/provider/auths/provider-auths-services.js')
-    script(src='app/provider/auths/provider-auths-directives.js')
-    script(src='app/provider/auths/provider-auth-service-lines.js')
-    script(src='app/provider/auths/provider-auth-detail.js')
-    script(src='app/provider/auths/provider-auth-files.js')
-    script(src='app/provider/auths/provider-auths-search.js')
-    script(src='app/provider/auths/provider-auths-grid.js')
-    script(src='app/provider/auths/provider-auths-export.js')
-
-    script(src='app/provider/claims/provider-claims.js')
-    script(src='app/provider/claims/provider-claims-services.js')
-    script(src='app/provider/claims/provider-claims-search.js')
-    script(src='app/provider/claims/provider-claims-grid.js')
-    script(src='app/provider/claims/provider-claims-export.js')
-    script(src='app/provider/claims/provider-claims-details.js')
-
-    script(src='app/registration/registration.js')
-    script(src='app/registration/registration-admin.js')
-    script(src='app/registration/registration-terms.js')
-
-    script(src='app/user/user.js')
-    script(src='app/user/password/change-password.js')
-
-    script(src='app/vastaff/vastaff.js')
-    script(src='app/vastaff/home/vastaff-home.js')
-
-    script(src='app/vastaff/notifications/vastaff-notifications.js')
-    script(src='app/vastaff/notifications/vastaff-notifications-services.js')
-    script(src='app/vastaff/notifications/vastaff-notifications-search.js')
-    script(src='app/vastaff/notifications/vastaff-notifications-grid.js')
-    script(src='app/vastaff/notifications/vastaff-notifications-export.js')
-
-    script(src='app/vastaff/auth-modal/auth-modal.js')
-    script(src='app/vastaff/auth-modal/auth-modal-files.js')
-    script(src='app/vastaff/auth-modal/auth-modal-services.js')
-    script(src='app/vastaff/auth-modal/auth-modal-service-lines.js')
-
-    script(src='app/vastaff/upload/vastaff-upload.js')
-
-    script(src='app/vastaff/vastaff-auths/vastaff-auths.js')
-    script(src='app/vastaff/vastaff-auths/vastaff-auths-search.js')
-    script(src='app/vastaff/vastaff-auths/vastaff-auths-grid.js')
-    script(src='app/vastaff/vastaff-auths/vastaff-auths-export.js')
-    script(src='app/vastaff/vastaff-auths/vastaff-auth-service-lines.js')
-    script(src='app/vastaff/vastaff-auths/vastaff-auth-files.js')
-    script(src='app/vastaff/vastaff-auths/vastaff-auths-services.js')
-    script(src='app/vastaff/upload/vastaff-upload.js')
-
-    script(src='app/vet/home/vet-home.js')
-
+    script(src='components/home/home.js')
+    script(src='components/home/error.js')

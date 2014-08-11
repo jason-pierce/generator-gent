@@ -1,0 +1,123 @@
+// Buttons
+//
+// These are the button styles (Bootstrap 2.3.2-based) for the PC3 application.
+// 
+// Markup:
+// <button class="btn {$modifiers}">Submit</button>
+// 
+// .btn                 - To be used on any item that want to look like a button.
+// .btn-primary         - To be used on the primary action buttons on a page.  Can have multiple per page; but use caution.
+// .btn-info            - To be used for secondary items, a paler blue.
+// .btn-warning         - To be used for very important, high visibility (but NON-PRIMARY) items.
+//
+// Styleguide 1.1
+
+
+
+// Button Groups
+//
+// These are the button groupings for next-to-each-other buttons.
+// 
+// Markup:
+// <div class="btn-group {$modifiers}">
+//     <span class="inline-help">Line-item actions</span>
+//     <button class="btn btn-info">Button One</button>
+//     <button class="btn">Button Two</button>
+//     <button class="btn btn-disabled">Button Three</button>
+//     <button class="btn btn-primary">Button Four</button>
+// </div>
+//
+// .btn-group           - To be used as a container div around connected buttons.
+// .btn-group-label     - To be used as a container (along with btn-group) around connected buttons, but with a label above the buttons in a blue box.
+// .btn-group-label-clear   - To be used on the container (along with btn-group) around the connected buttons; this has a clear background
+//
+// Styleguide 1.1.1
+
+
+// Warning Button
+//
+// This is the floating mini export button to the top right of grids.
+// 
+// Markup:
+// <div class="export-button">
+//     <button class="btn btn-warning btn-mini">Button One</button>
+// </div>
+//
+// .export-button   - To be used on the container around the button; this shifts it over to the right.
+//
+// Styleguide 1.1.2
+
+
+.btn {
+    &.disabled,
+    &.disabled:active,
+    &.disabled:hover {
+        background: #E6E6E6;
+        @include buttonBackground(#E6E6E6, #ddd);
+        color: #535353 !important;
+    }
+}
+.btn-primary {
+    background: #57a5ee; /* Old browsers */
+    color: snow;
+    @include buttonBackground(#6db3f2, #1e69de);
+    // @include background-image(linear-gradient(#6db3f2 0%, #54a3ee 50%, #3690f0 51%, #1e69de 100%));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6db3f2', endColorstr='#1e69de',GradientType=0 ); /* IE6-8 */
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    *background-color: #1e69de; /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+    border-color: #6db3f2 #6db3f2 darken(#6db3f2, 15%);
+    border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fade-in(rgba(0,0,0,.1), 0.15);
+    @include border-radius(4px);
+
+    &:hover {
+        @include background-image(linear-gradient(#62adff 0%, #4898f8 50%, #2e81fc 51%, #1a55e5 100%));
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#62adff', endColorstr='#1a55e5',GradientType=0 ); /* IE6-8 */
+        *background-color: #1e69de; /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZkYjNmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzU0YTNlZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iIzM2OTBmMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxZTY5ZGUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        border-color: #62adff #62adff darken(#62adff, 15%);
+        border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fade-in(rgba(0,0,0,.1), 0.15);
+    }
+}
+
+.btn-info {
+}
+.btn-warning {
+    @include buttonBackground(#b38e1a, #6c5201);
+}
+
+.btn-group {
+    &.btn-group-label {
+        background-color: $paleBlue;
+        padding: 3px 10px 10px 10px;
+        @include border-radius(4px);
+
+        span.inline-help {
+            color: $navyBlue;
+            font-size: 11px;
+            vertical-align: top;
+            font-family: sans-serif;
+            width: 100%;
+            line-height: 14px;
+            display: block;
+            text-transform: uppercase;
+            text-shadow: 0 0 1px transparent;
+            letter-spacing: 3px;
+            @include box-shadow($blue, 1px, 1px, 2px, 0, inset)
+        }
+    }
+    &.btn-group-label-clear {
+        background-color: transparent;
+    }
+}
+// This is for the floating Export CSV Button
+.export-button {
+    z-index: 999;
+    position: relative;
+    right: 10px;
+    top: 10px;
+
+    .btn {
+        @extend .btn-mini;
+    }
+}

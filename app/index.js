@@ -47,17 +47,17 @@ var gent = yeoman.generators.Base.extend({
     },
 
     scaffoldFolders: function () {
+        this.mkdir("build");
+        this.mkdir("config");
         this.mkdir("src");
-        this.mkdir("src/app");
         this.mkdir("src/_assets");
         this.mkdir("src/_assets/sass");
         this.mkdir("src/_assets/bower_components");
         this.mkdir("src/_assets/data");
-        this.mkdir("src/_assets/font");
+        this.mkdir("src/_assets/fonts");
         this.mkdir("src/_assets/img");
-        this.mkdir("src/app/_globals");
-        this.mkdir("src/app/sections");
-        this.mkdir("build");
+        this.mkdir("src/components");
+        this.mkdir("src/components/_globals");
     },
 
     copyMainFiles: function () {
@@ -69,13 +69,19 @@ var gent = yeoman.generators.Base.extend({
         // this.copy("_index.jade", "src/index.jade");
         this.copy("_gruntfile.js", "Gruntfile.js");
         this.copy("_package.json", "package.json");
-        this.copy("_main.css", "src/_assets/sass/main.css");
+        this.copy("config/compass.config.rb", "config/compass.config.rb");
+        // this.copy("templates/config/karma.conf.js", "config/karma.conf.js");
+        this.copy("components/_globals/_footer.jade", "src/components/_globals/_footer.jade");
+        this.copy("_assets/sass/main.scss", "src/_assets/sass/main.scss");
+        this.copy("_assets/sass/_partials/_buttons.scss", "src/_assets/sass/_partials/_buttons.scss");
+        this.copy("_assets/sass/_partials/_type.scss", "src/_assets/sass/_partials/_type.scss");
 
         var context = {
             site_name: this.appName
         };
 
         this.template("_index.jade", "src/index.jade", context);
+        this.template("config/karma.conf.js", "config/karma.conf.js", context);
     },
     generateDemoSection: function () {
         // Another function that you may not be familiar with is the classify function, which is provided to you by Underscore Strings. What it does is it takes a string and it creates a "class" version of it, it will remove things like spaces and create a camel-cased version, suitable for things like HTML classes and IDs; underscored does the same thing except instead of camel-casing it snake-cases them. Besides that, it's all stuff we have done in the previous function, the only other thing worth mentioning is that we are pre-pending a time-stamp, both to keep the files unique but also for ordering. When we load the files in, they are alphabetized so having the time as the prefix will keep them in order.
@@ -90,8 +96,8 @@ var gent = yeoman.generators.Base.extend({
             };
 
             fileBase = Date.now() + "_" + this._.underscored("Demo Section");
-            htmlFile = "app/sections/" + fileBase + ".html";
-            cssFile  = "app/css/" + fileBase + ".css";
+            htmlFile = "src/components/sections/" + fileBase + ".html";
+            cssFile  = "src/_assets/css/" + fileBase + ".css";
 
             this.template("_section.html", htmlFile, context);
             this.template("_section.css", cssFile, context);
@@ -108,7 +114,7 @@ var gent = yeoman.generators.Base.extend({
         menu = this.read("_menu.html");
 
         t = '<a><%= name %></a>';
-        files = this.expand("app/sections/*.html");
+        files = this.expand("src/components/*.html");
 
         for (i = 0; i < files.length; i++) {
             name = this._.chain(files[i]).strRight("_").strLeftBack(".html").humanize().value();
@@ -122,7 +128,7 @@ var gent = yeoman.generators.Base.extend({
             menu = this.append(menu, "div.menu", link);
         }
 
-        this.write("app/menu.html", menu);
+        this.write("src/menu.html", menu);
     },
     runNpm: function () {
         var done = this.async();
