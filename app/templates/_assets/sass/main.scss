@@ -6,41 +6,13 @@
 // 
 // Styleguide 2.
 
-// Table Elements
-// 
-// Styleguide 3.
 
-// List Elements
-// 
-// Styleguide 4.
-
-// Icon Elements
-// 
-// Styleguide 5.
-
-// Modal Elements
-// 
-// Styleguide 6.
-
-// Navigation Elements
-// 
-// Styleguide 7.
-
-// Layout Elements
-// 
-// Styleguide 8.
-
-
-@import "bourbon";
 @import "compass";
 
 /* Vendor includes */
-@import "vendor/bootstrap/bootstrap.scss";
-@import "vendor/font-awesome-4.0.3/font-awesome.scss";
 
 /* Mixins
 ----------------------------------------- */
-@import "modules/_pc3-mixins.scss";
 
 /* Variables
 ----------------------------------------- */
@@ -53,20 +25,8 @@ $max-width: 1200px;
 
 /* Building out the full  CSS
 ----------------------------------------- */
-@import "partials/_pc3-autocomplete.scss";
-@import "partials/_pc3-buttons.scss";
-@import "partials/_pc3-customizations.scss";
-@import "partials/_pc3-datepicker.scss";
-@import "partials/_pc3-forms.scss";
-@import "partials/_pc3-grid.scss";
-@import "partials/_pc3-icons.scss";
-@import "partials/_pc3-layout.scss";
-@import "partials/_pc3-lists.scss";
-@import "partials/_pc3-modals.scss";
-@import "partials/_pc3-nav.scss";
-@import "partials/_pc3-tabs.scss";
-@import "partials/_pc3-type.scss";
-@import "partials/_pc3-utilities.scss";
+@import "_partials/_buttons.scss";
+@import "_partials/_type.scss";
 
 
 

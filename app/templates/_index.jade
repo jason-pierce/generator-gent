@@ -1,10 +1,8 @@
 !!! 5
 
-|<!--[if lt IE 7 ]> <html xmlns:ng="http://angularjs.org" ng-app="PC3" ng-controller="rootPC3Controller" id="ng-app" class="ie6" lang="en"> <![endif]-->
-|<!--[if IE 7 ]>    <html xmlns:ng="http://angularjs.org" ng-app="PC3" ng-controller="rootPC3Controller" id="ng-app" class="ie7" lang="en"> <![endif]-->
-|<!--[if IE 8 ]>    <html xmlns:ng="http://angularjs.org" ng-app="PC3" ng-controller="rootPC3Controller" id="ng-app" class="ie8" lang="en"> <![endif]-->
-|<!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="PC3" ng-controller="rootPC3Controller" id="ng-app" class="ie9" lang="en"> <![endif]-->
-|<!--[if (gt IE 9)|!(IE)]><!--> <html xmlns:ng="http://angularjs.org" ng-app="PC3" ng-controller="rootPC3Controller" class="" lang="en"> <!--<![endif]-->
+|<!--[if IE 8 ]>    <html xmlns:ng="http://angularjs.org" ng-app="APP" id="ng-app" class="ie8" lang="en"> <![endif]-->
+|<!--[if IE 9 ]>    <html xmlns:ng="http://angularjs.org" ng-app="APP" id="ng-app" class="ie9" lang="en"> <![endif]-->
+|<!--[if (gt IE 9)|!(IE)]><!--> <html xmlns:ng="http://angularjs.org" ng-app="APP" class="" lang="en"> <!--<![endif]-->
 
 head
     //if IE
@@ -13,64 +11,40 @@ head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='Agilex')
-    title <%= site_name %>
+    title Main
     
-    link(href='_assets/css/pc3.css', rel='stylesheet', media='screen')
-    
-    //if lte IE 8
-        <script src="lib/json3/json3.min.js"></script>
-        <script src="lib/es5-shim/es5-shim.min.js"></script>
-        <link rel="stylesheet" href="_assets/css/pc3ie.css" />
-        <script>
-        |document.createElement('ng-include');
-        |document.createElement('ng-pluralize');
-        |document.createElement('ng-view');
-        |document.createElement('ng-transclude');
-        |document.createElement('tabs');
-        |document.createElement('pane');
-        |document.createElement('tab');
-        |document.createElement('tabset');
-        |document.createElement('datepicker');
-        |document.createElement('timepicker');
-        |document.createElement('autocomplete');
-
-        |document.createElement('ng:include');
-        |document.createElement('ng:pluralize');
-        |document.createElement('ng:view');
-        |document.createElement('ng:transclude');
-        |document.createElement('ng:tabs');
-        |document.createElement('ng:pane');
-        |document.createElement('ng:tab');
-        |document.createElement('ng:tabset');
-        |document.createElement('ng:datepicker')
-        |document.createElement('ng:timepicker')
-        |document.createElement('ng:autocomplete')
-        |document.createElement('ng:maxlength')
-        </script>
-
-    // Fav and touch icons 
-    link(rel='shortcut icon', href='favicon.ico')
-    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='_assets/img/ico/apple-touch-icon-144-precomposed.png')
-    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='_assets/img/ico/apple-touch-icon-114-precomposed.png')
-    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='_assets/img/ico/apple-touch-icon-72-precomposed.png')
-    link(rel='apple-touch-icon-precomposed', href='_assets/img/ico/apple-touch-icon-57-precomposed.png')
+    /<!-- build:css _assets/css/monolith.css -->
+    // bower:css
+    // endbower
+    link(href='_assets/css/main.css', rel='stylesheet', media='screen')
+    /<!-- endbuild -->
 
 body
     div.container
-        a#skip-content.center(href='#') Skip to Content
+        div.row
+            div.span12
+                div.head
+                    h1.muted
+                        | LOGO
+            div.span12.panel.panel-default
+                div.panel-heading
+                    | $rootScope.locals - root level.
+                div.panel-body
+                    | {{ locals | json }}
+
         div#content-wrapper.row-fluid
             div#content
                 div(ng-view='ng-view', autoscroll)
     div#push
-    include components/_globals/_footer.jade
+    include components/core/_footer.jade
 
+    <!-- build:js components/core/lib.js -->
     // bower:js
     // endbower
+    <!-- endbuild -->
 
+    <!-- build:js({.tmp,src}) components/core/main.js -->
     script(src='components/app.js')
-    script(src='components/_globals/root.js')
-    script(src='components/_globals/directives.js')
-    script(src='components/_globals/filters.js')
-
     script(src='components/home/home.js')
-    script(src='components/home/error.js')
+    script(src='components/login/login.js')
+    <!-- endbuild -->

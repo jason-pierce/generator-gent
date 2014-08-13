@@ -1,0 +1,72 @@
+div.section
+    div.container
+        div.row
+            div.col-lg-4.col-md-4
+                h3 Home Module
+                p
+                    | This page is from the Home Component.
+                div.span12.panel.panel-default
+                    div.panel-heading
+                        | $rootScope.locals - Home level.
+                    div.panel-body
+                        | {{ locals | json }}
+                        p
+                            | {{ nested }}
+
+            //- div#loginbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2(style="margin-top:50px;")  
+            div#loginbox.mainbox.col-lg-4.col-md-4(ng-controller="LoginCtrl")
+                h3 Login Module
+                p
+                    | This page is from the Login Component.
+                div.span12.panel.panel-default
+                    div.panel-heading
+                        | $rootScope.locals - Login level.
+                    div.panel-body
+                        | {{ locals | json }}     
+                        p
+                            | {{ nested }}           
+                div.panel.panel-info
+                    div.panel-heading
+                        div.panel-title
+                            | Sign In
+                            div(style="float:right; font-size: 80%; position: relative; top:-10px")
+                                a(ng-href="#")
+                                    | Forgot password?
+                        div.panel-body(style="padding-top:30px")
+                            div#login-alert.alert.alert-danger.col-sm-12(style="display:none")
+                            form#loginform.form-horizontal(role="form", novalidate)
+                                 div.input-group(style="margin-bottom: 25px")
+                                    span.input-group-addon
+                                        i.glyphicon.glyphicon-user
+                                    input#login-username.form-control(type="text"
+                                        name="username",
+                                        ng-model="username",
+                                        value="",
+                                        placeholder="username or email",
+                                        ng-required="true")   
+                                 div.input-group(style="margin-bottom: 25px")
+                                    span.input-group-addon
+                                        i.glyphicon.glyphicon-lock 
+                                    input#login-password.form-control(type="password",
+                                        name="password",
+                                        ng-model="password",
+                                        value="",
+                                        placeholder="password",
+                                        ng-required="true") 
+                                 div.input-group                               
+                                    div.checkbox
+                                        label
+                                            input#login-remember(type="checkbox",
+                                                name="remember",
+                                                value="1")
+                                            | Remember me
+                                    div.form-group(style="margin-top:10px")
+                                        div.col-sm-12.controls
+                                            a#btn-login.btn.btn-success(ng-href="#")
+                                                | Login
+                                    div.form-group
+                                        div.col-md-12.control
+                                            div(style="border-top: 1px solid#888; padding-top:15px; font-size:85%")
+                                                | Don't have an account! 
+                                                a(href="#")
+                                                    | Sign Up Here

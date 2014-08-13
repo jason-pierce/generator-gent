@@ -5,14 +5,81 @@
 
 module.exports = function (grunt) {
     grunt.initConfig({
+        // https://github.com/gruntjs/grunt-contrib-watch
+        // Run predefined tasks whenever watched file patterns are added, changed or deleted.
+        watch: {
+            compass: {
+                files: ['src/_assets/sass/*.scss', 'src/_assets/**/*.scss'],
+                tasks: ['compass']
+            },
+            jade: {
+                files: ["src/**/*.jade", "*.jade"],
+                tasks: ['jade']
+            },
+            scripts: {
+                files: ['src/**/*.js', '!src/lib/**/*.js'],
+                tasks: ['jslint:server', 'copy'],
+                options: {
+                    spawn: false
+                }
+            }
+        },
+
+        // grunt-contrib-clean
+        // Clean files and folders.
+        clean: [
+            'src/components/core/main.js',
+            'src/components/core/lib.js',
+            'build',
+            '.sass-cache',
+            'logs',
+            '.tmp'
+        ],
+        // grunt-wiredep
+        // grunt-wiredep is a Grunt plug-in, which finds your components and injects them directly into the HTML file you specify.
+        wiredep: {
+            target: {
+                src: [
+                    'src/*.jade',                   // .jade support...
+                    'src/_assets/sass/main.scss'     // .scss & .sass support...
+                ],
+                // Optional:
+                // ---------
+                cwd: '',
+                dependencies: true,
+                devDependencies: false,
+                exclude: [],
+                fileTypes: {},
+                ignorePath: '',
+                overrides: {}
+            },
+            testKarma: {
+                src: [
+                    './karma.conf.js'
+                ],
+                fileTypes: {
+                    js: {
+                        block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+                        detect: {
+                            js:  /'(.*\.js)'/gi
+                        },
+                        replace: {
+                            js: '\'{{filePath}}\','
+                        }
+                    }
+                },
+                devDependencies: true,
+                exclude: [/angular-scenario/, /jasmine/]
+            }
+        },
+
         // grunt-contrib-jade
         // Generate HTML from Jade Templates.
         jade: {
             compileModules: {
                 options: {
                     data: {
-                        debug: true,
-                        timestamp: "<%= new Date().getTime() %>"
+                        debug: true
                     },
                     pretty: true
                 },
@@ -35,7 +102,7 @@ module.exports = function (grunt) {
                     config: 'config/compass.config.rb'
                 },
                 files: {
-                    'build/_assets/css/pc3.css': 'src/_assets/sass/pc3.scss'
+                    'build/_assets/css/main.css': 'src/_assets/sass/main.scss'
                 }
             }
         },
@@ -48,6 +115,8 @@ module.exports = function (grunt) {
                 ],
                 exclude: [
                     'src/_assets/bower_components/**/*.js',
+                    'src/components/core/main.js',
+                    'src/components/core/lib.js',
                     'src/**/*.min.js'
                 ],
                 directives: {
@@ -55,9 +124,9 @@ module.exports = function (grunt) {
                     node: true,
                     plusplus: true,
                     unparam: true,
-                    globals: {
-                        // 'jQuery' etc.
-                    }
+                    predef: [
+                        'angular'
+                    ]
                 },
                 options: {
                     junit: 'logs/server-junit.xml', // write the output to a JUnit XML
@@ -72,30 +141,10 @@ module.exports = function (grunt) {
         // Unit Testing for Angular.
         karma: {
             unit: {
-                configFile: 'config/karma.conf.js',
+                configFile: 'karma.conf.js',
                 runnerPort: 9999,
                 singleRun: true,
                 browsers: ['Chrome']
-            }
-        },
-
-        // grunt-wiredep
-        // grunt-wiredep is a Grunt plug-in, which finds your components and injects them directly into the HTML file you specify.
-        wiredep: {
-            target: {
-                src: [
-                    'src/*.jade',                   // .jade support...
-                    'src/_assets/sass/pc3.scss'     // .scss & .sass support...
-                ],
-                // Optional:
-                // ---------
-                cwd: '',
-                dependencies: true,
-                devDependencies: true,
-                exclude: [],
-                fileTypes: {},
-                ignorePath: '',
-                overrides: {}
             }
         },
 
@@ -116,14 +165,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
-        // grunt-contrib-clean
-        // Clean files and folders.
-        clean: [
-            'build', 
-            '.tmp'
-        ],
-
         // grunt-contrib-copy
         // Copy files and folders.
         copy: {
@@ -133,50 +174,64 @@ module.exports = function (grunt) {
                 src: [
                     '**', 
                     '!**/*.jade',
-                    '!_assets/sass'
+                    '!_assets/sass/*.scss',
+                    '!_assets/sass/**/*.scss'
                 ],
                 dest: 'build/'
+            },
+            assets: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/_assets/',
+                        src: [ '**',
+                            '!sass/**/*.scss'],
+                        dest: 'build/_assets/'
+                    }
+                ]
+            },
+            glyphicons: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/_assets/bower_components/bootstrap-css/fonts/',
+                        src: [ '**',
+                            '!sass/**/*.scss'],
+                        dest: 'build/_assets/fonts/'
+                    }
+                ]
             }
         },
  
         // grunt-usemin
-        // Replaces references from non-optimized scripts, stylesheets and other assets to their optimized version within a set of HTML files (or any templates/views).
+        // Reads HTML for usemin blocks to enable smart builds that automatically
+        // concat, minify and revision files. Creates configurations in memory so
+        // additional tasks can operate on them
         useminPrepare: {
-            html: 'src/index.jade'
+            html: 'src/index.jade',
+            options: {
+                dest: 'src'
+            }
         },
+        // Performs rewrites based on filerev and the useminPrepare configuration
         usemin: {
-            html: ['src/index.jade']
+            html: ['build/index.html'],
+            css: ['build/_assets/css/main.css'],
+            options: {
+                dest: 'build'
+            }
         },
+
         // grunt-contrib-uglify
         // Minify files with UglifyJS.
         uglify: {
             options: {
                 sourceMap: true,
-                report: 'min',
-                mangle: false
+                mangle: false,
+                beautify: true
             }
         },
 
-
-        // https://github.com/gruntjs/grunt-contrib-watch
-        // Run predefined tasks whenever watched file patterns are added, changed or deleted.
-        watch: {
-            compass: {
-                files: ['src/_assets/sass/*.scss', 'src/_assets/**/*.scss'],
-                tasks: ['compass']
-            },
-            jade: {
-                files: ["src/app/**/*.jade", "*.jade"],
-                tasks: ['jade', 'jade:index', 'karma']
-            },
-            scripts: {
-                files: ['src/**/*.js', '!src/lib/**/*.js'],
-                tasks: ['jslint:server', 'karma', 'copy'],
-                options: {
-                    spawn: false
-                }
-            }
-        },
     });
 
 
@@ -189,29 +244,31 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-usemin');
-
     grunt.loadNpmTasks('grunt-jslint');
     grunt.loadNpmTasks('grunt-ng-annotate');
-
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-compass');
-
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-
     grunt.loadNpmTasks('grunt-styleguide');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-
     grunt.registerTask('build', [ 
-        'jade',
+        'clean',
+        'wiredep',
         'compass',
         'jslint',
-        'copy:main',
         'useminPrepare',
+        'jade',
+        'concat',
+        'uglify',
+        'cssmin',
         'usemin',
-        'uglify'
+        'copy:main',
+        'copy:assets',
+        'copy:glyphicons'
     ]);
     grunt.registerTask('deploy', [ 'build' ]);
     grunt.registerTask('default', [ 'build', 'watch' ]);

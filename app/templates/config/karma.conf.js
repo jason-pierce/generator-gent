@@ -4,21 +4,15 @@
 'use strict';
 
 module.exports = function (config) {
-    // Saving a globbed object of the bower components
-    prodComponents = Object.keys(grunt.file.readJSON('./bower.json').dependencies).map(
-        function (prodComponent) {
-            return prodComponent + "/**/*";
-        }
-    );
     config.set({
-        basePath : '../',
+        basePath : '',
 
         files : [
             // bower:js
             // endbower
-            ,'/src/components/**/*.js',
-            
-            '/src/components/**/*.spec.js'
+            'src/components/app.js',
+            'src/components/home/home.js',
+            'src/components/home/home_spec.js'
         ],
         autoWatch : true,
         frameworks: ['jasmine'],
@@ -26,7 +20,7 @@ module.exports = function (config) {
         //  config.LOG_ERROR
         //  config.LOG_WARN
         //  config.LOG_INFO
-        //  config.LOG_DEBU
+        //  config.LOG_DEBUG
         logLevel : config.LOG_INFO,
         loggers : [{type: 'console'}],
         plugins : [
@@ -42,10 +36,7 @@ module.exports = function (config) {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            '**/src/js/*.js': ['coverage'],
-            '**/src/js/**/*.js': ['coverage'],
-            '**/src/app/**/*.js': ['coverage'],
-            '**/src/app/**/**/*.js': ['coverage']
+            'src/components/**/*.js': ['coverage']
         },
         coverageReporter: {
             type : 'cobertura',
