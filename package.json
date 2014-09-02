@@ -6,7 +6,7 @@
   "main": "app/index.js",
   "repository": "generator-gent",
   "author": {
-    "name": "Tony",
+    "name": "Tony Stephens",
     "email": "tony.stephens@agilex.com",
     "url": "https://github.com/stephenst"
   },
